@@ -1,9 +1,11 @@
 package com.ebay.lzhang.rest;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +20,17 @@ public class TopRepoController {
     @Autowired
     private RestClientGateway restGateway;
     
-    @RequestMapping("/author")
-    public String index() {
-        return "Greetings from Leon Zhang via Spring Boot!";
+    @RequestMapping("")
+    public List<String> index() {
+        List<String> list = new ArrayList<String>();
+        
+        list.add("Greetings from Leon Zhang via Spring Boot!");
+        list.add("This REST controller supports following 3 api's");
+        list.add("1. GET /api/mostForked");
+        list.add("2. GRT /api/mostRecentlyUpdated");
+        list.add("3. GET /api/top10?q=<queryPattern>&sort=<sortBy_attribute>&order=[asc | desc]&page=[1,2,3..]&per_page=<items_per_page>");
+        
+        return list;
     }
     
     /**
@@ -28,7 +38,7 @@ public class TopRepoController {
      * 
      * @return
      */
-    @RequestMapping("/mostForked")
+    @GetMapping("/mostForked")
     public List<GitRepository> mostForked() {
         String query = "forks:>1";
         String sortBy = "forks";
@@ -42,7 +52,7 @@ public class TopRepoController {
      * 
      * @return
      */
-    @RequestMapping("/mostRecentlyUpdated")
+    @GetMapping("/mostRecentlyUpdated")
     public List<GitRepository> mostRecentlyUpdated() {
         String query = "updated";
         String sortBy = "updated";
@@ -65,7 +75,7 @@ public class TopRepoController {
      * @param itemsPerPage
      * @return
      */
-    @RequestMapping("/top10")
+    @GetMapping("/top10")
     public List<GitRepository> getTopRepositories(
             @RequestParam("q") String query, 
             @RequestParam("sort") String sortBy,
