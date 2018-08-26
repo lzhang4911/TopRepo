@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOP 10 GitHub Repositories</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+
+</style>        
+    </head>
+    <body>
+        <p>
+            0. <a href="/api/">/api</a></br>
+        </p>
+        
+        <p>
+            1. <a href="/api/mostForked">10 most forked</a></br>
+        </p>
+        
+        <p>
+            2. <a href="/api/top10?q=stars:>1&sort=stars">10 popular (stars)</a></br>
+        </p>
+        
+        <p>
+            3. <a href="/api/mostRecentlyUpdated">10 most recently updated</a></br>
+        </p>
+        
+        <p>
+            <form onsubmit="return false;">
+            4. 10 most recently updated up to the selected date:
+            <input type="date" id="date_input"/> <input type="button" id="go_btn" value="go" />
+            </form>
+        </p>
+    </body>
+    
+<script type="text/javascript">
+var go_btn = document.getElementById('go_btn');
+var date_input = document.getElementById('date_input');
+date_input.valueAsDate = new Date();
+
+go_btn.onclick = function(){
+	var url = self.location + "api/top10?q=pushed:<=" + date_input.value + "+updated&sort=updated";
+	self.location = url;
+}
+
+date_input.onchange = function(){
+    var url = self.location + "api/top10?q=pushed:<=" + this.value + "+updated&sort=updated";
+    self.location = url;
+}
+</script>
+</html>
